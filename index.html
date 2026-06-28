@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asnake Melesse — Artist</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0d0d0d;
+      color: #e8e8e8;
+      font-family: Georgia, serif;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2.5rem;
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .nav-name {
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: normal;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: #fff; }
+
+    /* HERO */
+    #hero {
+      height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 2.5rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('asnake%20photos/1e15eeec-e24c-4e2e-b29f-7c64534500c2.JPG') center/cover no-repeat;
+      opacity: 0.45;
+    }
+
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #0d0d0d 10%, transparent 60%);
+    }
+
+    .hero-text { position: relative; max-width: 600px; }
+
+    .hero-text p.label {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 1rem;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: normal;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-text p.sub {
+      color: rgba(255,255,255,0.55);
+      font-size: 1.1rem;
+      max-width: 380px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 2.5rem;
+      padding: 0.75rem 2rem;
+      border: 1px solid rgba(255,255,255,0.3);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn:hover {
+      border-color: #fff;
+      color: #fff;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 6rem 2.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 3rem;
+    }
+
+    /* GALLERY */
+    #work { max-width: 100%; padding-left: 2.5rem; padding-right: 2.5rem; }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 4px;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1;
+      background: #1a1a1a;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+      transition: opacity 0.4s, transform 0.4s;
+      display: block;
+    }
+
+    .gallery-item:hover img {
+      opacity: 1;
+      transform: scale(1.04);
+    }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.2rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .gallery-item:hover .gallery-caption { opacity: 1; }
+
+    .gallery-caption { z-index: 2; }
+    .gallery-caption p { font-size: 0.9rem; }
+    .gallery-caption span { font-size: 0.75rem; color: rgba(255,255,255,0.6); }
+
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='110'%3E%3Ctext x='110' y='55' dominant-baseline='middle' text-anchor='middle' font-family='Georgia, serif' font-size='12' letter-spacing='2' fill='rgba(255,255,255,0.22)' transform='rotate(-30, 110, 55)'%3EKirar Art Studio%3C/text%3E%3C/svg%3E");
+      background-size: 220px 110px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ABOUT */
+    #about { border-top: 1px solid rgba(255,255,255,0.08); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-photo {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      background: #1a1a1a;
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+    }
+
+    .about-text h2 {
+      font-size: 2.2rem;
+      font-weight: normal;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-text p {
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 1rem;
+    }
+
+    /* CONTACT */
+    #contact { border-top: 1px solid rgba(255,255,255,0.08); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .contact-block h3 {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-block p, .contact-block a {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .contact-block a:hover { color: #fff; }
+
+    .socials { display: flex; gap: 1.5rem; margin-top: 0.5rem; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.1em;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-name">Asnake Melesse</span>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-gradient"></div>
+    <div class="hero-text">
+      <p class="label">Visual Artist &mdash; Addis Ababa, Ethiopia</p>
+      <h1>Asnake Melesse</h1>
+      <p class="sub">Studio artist at Kirar Art Studio. Painter, sculptor, exhibitor since 2003.</p>
+      <a class="btn" href="#work">View Work</a>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="work" style="padding-top: 6rem; padding-bottom: 6rem;">
+    <div style="max-width:1100px; margin:0 auto; padding:0 2.5rem 3rem;">
+      <p class="section-label">Selected Works</p>
+    </div>
+    <div class="gallery" style="max-width:1100px; margin:0 auto; padding:0 2.5rem;">
+      <div class="gallery-item">
+        <img src="asnake%20photos/514d7bb8-b296-43f2-8575-a890c18ded9a.JPG" alt="The Procession" />
+        <div class="gallery-caption">
+          <span>Acrylic on canvas</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="asnake%20photos/8e23fafa-61b2-423b-835e-ca661d973ece.JPG" alt="Rain Ceremony" />
+        <div class="gallery-caption">
+          <span>Acrylic on canvas</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="asnake%20photos/IMG_5455.JPG" alt="Two Figures" />
+        <div class="gallery-caption">
+          <span>Acrylic on canvas</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="asnake%20photos/IMG_5456.JPG" alt="Forest Light" />
+        <div class="gallery-caption">
+          <span>Acrylic on canvas</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="asnake%20photos/85158efe-b34a-442a-aabd-bb6e6f891d09.JPG" alt="Adornment" />
+        <div class="gallery-caption">
+          <span>Acrylic on canvas</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="asnake%20photos/f9acfca7-b7c5-4a06-b3e6-d360b89c83b4.JPG" alt="Pilgrimage" />
+        <div class="gallery-caption">
+          <span>Acrylic on canvas</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">About</p>
+    <div class="about-grid">
+      <div class="about-photo">
+        <img src="asnake%20photos/4fae43b9-09d4-4180-984c-b3b7dfacb1ca.JPG" alt="Asnake Melesse" />
+      </div>
+      <div class="about-text">
+        <h2>Asnake Melesse</h2>
+        <p>
+          Asnake Melesse was born in 1977 in Ethiopia. After graduating from the Addis Ababa
+          University School of Fine Art and Design, he has worked as a full-time studio artist
+          at Kirar Art Studio since 2003.
+        </p>
+        <p>
+          In 2002, he received a certificate in Basic Sculpture from the Austrian Embassy. An
+          experienced and professional artist, he has participated in numerous solo and group
+          exhibitions in Ethiopia and abroad.
+        </p>
+        <p>
+          In 2011, Asnake was awarded the Art Computational Award presented by the Embassy of
+          the United States in Addis Ababa. His work is also on permanent display at the
+          Addis Ababa Museum.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Contact</p>
+    <div class="contact-grid">
+      <div class="contact-block">
+        <h3>Phone</h3>
+        <a href="tel:+251911657431">+251 91 165 7431</a>
+      </div>
+      <div class="contact-block">
+        <h3>Studio</h3>
+        <p>Kirar Art Studio, Addis Ababa, Ethiopia</p>
+      </div>
+      <div class="contact-block">
+        <h3>Inquiries</h3>
+        <p>Original paintings and prints available. For commissions, exhibitions, and press — reach out by phone.</p>
+      </div>
+      <div class="contact-block">
+        <h3>Follow</h3>
+        <div class="socials">
+          <a href="https://web.facebook.com/asnake.melese.102" target="_blank" rel="noopener">Facebook</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2026 Asnake Melesse. All rights reserved.
+  </footer>
+
+</body>
+</html>
